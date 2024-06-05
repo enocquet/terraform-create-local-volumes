@@ -19,7 +19,7 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | Namespace where the resources are deployed | `string` | n/a | yes |
-| <a name="input_resources"></a> [resources](#input\_resources) | n/a | `any` | n/a | yes |
+| <a name="input_resources"></a> [resources](#input\_resources) | Values for the persistent volume and persistent volume claims when in <br>  a bare metal context and provisioner is set to local-path.<br>  If a provisioner is available, set the provisioner variable to the <br>  value of the StorageClass for this provisioner. | <pre>list(object({<br>    name         = string<br>    storage      = string<br>    labels       = map(string)<br>    access_modes = list(string)<br>    path         = string<br>    node_affinity = object({<br>      key      = string<br>      operator = string<br>      values   = list(string)<br>    })<br>  }))</pre> | n/a | yes |
 | <a name="input_is_bare_metal"></a> [is\_bare\_metal](#input\_is\_bare\_metal) | Flag to indicate if the environment is bare metal | `bool` | `false` | no |
 | <a name="input_provisioner"></a> [provisioner](#input\_provisioner) | Provisioner to use for the storage class | `string` | `""` | no |
 <!-- END_TF_DOCS -->
