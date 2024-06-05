@@ -1,5 +1,5 @@
 resource "kubernetes_persistent_volume_v1" "local-pv" {
-  count = var.is_bare_metal && var.provisioner == "local-path" ? length(var.resources) : 0
+  count = length(var.resources)
   metadata {
     name   = "${var.resources[count.index].name}-pv"
     labels = var.resources[count.index].labels
@@ -39,7 +39,7 @@ resource "kubernetes_persistent_volume_v1" "local-pv" {
 }
 
 resource "kubernetes_persistent_volume_claim_v1" "local-pvc" {
-  count = var.is_bare_metal ? length(var.resources) : 0
+  count = length(var.resources)
 
   metadata {
     name      = "${var.resources[count.index].name}-pvc"
