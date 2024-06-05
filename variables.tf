@@ -5,6 +5,7 @@ variable "resources" {
     labels       = map(string)
     access_modes = list(string)
     path         = string
+    namespace    = string
     node_affinity = object({
       key      = string
       operator = string
@@ -13,25 +14,12 @@ variable "resources" {
   }))
   description = <<EOT
   Values for the persistent volume and persistent volume claims when in 
-  a bare metal context and provisioner is set to local-path.
-  If a provisioner is available, set the provisioner variable to the 
-  value of the StorageClass for this provisioner.
+  a bare metal / local cluster context and there with no provisioner to 
+  dynamically create PV & PVC.
   EOT
 }
 
-variable "namespace" {
-  description = "Namespace where the resources are deployed"
+variable "config_path" {
   type        = string
-}
-
-variable "is_bare_metal" {
-  description = "Flag to indicate if the environment is bare metal"
-  type        = bool
-  default     = false
-}
-
-variable "provisioner" {
-  description = "Provisioner to use for the storage class"
-  type        = string
-  default     = ""
+  description = "Path to the kubeconfig file."
 }

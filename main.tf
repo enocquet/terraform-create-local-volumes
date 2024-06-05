@@ -29,13 +29,6 @@ resource "kubernetes_persistent_volume_v1" "local-pv" {
       }
     }
   }
-
-  lifecycle {
-    precondition {
-      condition     = var.is_bare_metal && var.provisioner == "local-path"
-      error_message = "This resource is only available in a bare metal environment and for local-path provisioner."
-    }
-  }
 }
 
 resource "kubernetes_persistent_volume_claim_v1" "local-pvc" {
@@ -43,7 +36,7 @@ resource "kubernetes_persistent_volume_claim_v1" "local-pvc" {
 
   metadata {
     name      = "${var.resources[count.index].name}-pvc"
-    namespace = var.namespace
+    namespace = var.resources[count.index].namespace
   }
 
   spec {
@@ -55,12 +48,5 @@ resource "kubernetes_persistent_volume_claim_v1" "local-pvc" {
       }
     }
     volume_name = "${var.resources[count.index].name}-pv"
-  }
-
-  lifecycle {
-    precondition {
-      condition     = var.is_bare_metal && var.provisioner == "local-path"
-      error_message = "This resource is only available in a bare metal environment and for local-path provisioner."
-    }
   }
 }
